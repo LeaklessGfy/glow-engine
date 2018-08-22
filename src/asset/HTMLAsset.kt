@@ -9,10 +9,9 @@ class HTMLAsset(private val image: HTMLImageElement): Asset {
 
     companion object Factory {
         @JsName("init")
-        fun init(paths: Array<String>, callback: (assets: dynamic, errors: dynamic) -> Nothing) {
+        fun init(paths: Array<String>, callback: (assets: dynamic) -> Nothing) {
             var counter = 0
             val assets: dynamic = object{}
-            val errors = ArrayList<String>()
 
             for (path in paths) {
                 val img = window.document.createElement("img") as HTMLImageElement
@@ -22,15 +21,11 @@ class HTMLAsset(private val image: HTMLImageElement): Asset {
                     asset.loaded = true
                     assets[path] = asset
                     if (counter >= paths.size) {
-                        callback(assets, errors.toTypedArray())
+                        callback(assets)
                     }
                 }
                 img.onerror = { _, _, _, _, _ ->
-                    counter++
-                    errors.add(path)
-                    if (counter >= paths.size) {
-                        callback(assets, errors.toTypedArray())
-                    }
+                    throw Exception("Bad url : $path")
                 }
                 img.src = path
             }

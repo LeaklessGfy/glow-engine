@@ -1,8 +1,17 @@
 <html>
 <head>
+    <style>
+        canvas {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <canvas id="canvas" width="1000" height="1000"></canvas>
+    <canvas id="canvas" width="1000" height="400"></canvas>
     <script type="text/javascript" src="out/production/Glow/lib/kotlin.js"></script>
     <script type="text/javascript" src="out/production/Glow/Glow.js"></script>
     <script>
@@ -10,19 +19,14 @@
             var canvas = document.getElementById("canvas");
             var ctx = canvas.getContext("2d");
 
-            Glow.asset.HTMLAsset.Factory.init(["grass.png", "error.png"], function(assets, errors) {
-                console.log(errors);
-
+            Glow.asset.HTMLAsset.Factory.init(["grass.png"], function(assets) {
                 var map = Glow.map.Map.Factory.create(assets["grass.png"]);
                 var engine = new Glow.Engine(map);
-
-                canvas.width = map.width();
-                canvas.height = map.height();
 
                 ctx.fillStyle = "black";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                engine.draw(ctx, 0, 0);
+                engine.draw(ctx, canvas.width / 2, (canvas.height / 2) - (map.height() / 3));
             });
         }
     </script>

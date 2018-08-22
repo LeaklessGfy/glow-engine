@@ -27,7 +27,7 @@ class Tile(private val point: Point, private val background: Asset, var overlay:
         val dx = (point.x - point.y) * w
         val dy = (point.x + point.y) * h
 
-        background.draw(ctx, dx.toDouble(), dy.toDouble())
-        overlay?.draw(ctx, dx.toDouble(), dy.toDouble())
+        background.draw(ctx, dx.toDouble() + x, dy.toDouble() + y)
+        overlay?.draw(ctx, dx.toDouble() + x, dy.toDouble() + y)
     }
 }
