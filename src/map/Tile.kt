@@ -17,8 +17,9 @@ class Tile(private val point: Point, private val background: Asset, var overlay:
     }
 
     override fun draw(ctx: CanvasRenderingContext2D, x: Double, y: Double) {
-        //val mX = point.x * background.width().toDouble()
-        //val mY = point.y * background.height().toDouble()
+        // Grid representation
+        // val mX = point.x * background.width().toDouble()
+        // val mY = point.y * background.height().toDouble()
 
         val w = background.width() / 2
         val h = (background.height() / 3.5f)
