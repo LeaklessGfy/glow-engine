@@ -23,10 +23,11 @@
                 var map = Glow.map.Map.Factory.create(assets["grass.png"]);
                 var engine = new Glow.Engine(map);
 
-                ctx.fillStyle = "black";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                canvas.onmousemove = function(e) {
+                    engine.onHover(e, canvas);
+                };
 
-                engine.draw(ctx, canvas.width / 2, (canvas.height / 2) - (map.height() / 3));
+                engine.draw(ctx, 0, 0);
             });
         }
     </script>

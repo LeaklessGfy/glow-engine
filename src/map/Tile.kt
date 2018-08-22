@@ -4,6 +4,10 @@ import asset.Asset
 import org.w3c.dom.CanvasRenderingContext2D
 
 class Tile(private val point: Point, private val background: Asset, var overlay: Asset? = null): Asset {
+    fun onHover() {
+        println(point)
+    }
+
     override fun width(): Int {
         return background.width()
     }
@@ -21,13 +25,11 @@ class Tile(private val point: Point, private val background: Asset, var overlay:
         // val mX = point.x * background.width().toDouble()
         // val mY = point.y * background.height().toDouble()
 
-        val w = background.width() / 2
-        val h = (background.height() / 3.5f)
+        background.draw(ctx, x, y)
+        overlay?.draw(ctx, x, y)
+    }
 
-        val dx = (point.x - point.y) * w
-        val dy = (point.x + point.y) * h
-
-        background.draw(ctx, dx.toDouble() + x, dy.toDouble() + y)
-        overlay?.draw(ctx, dx.toDouble() + x, dy.toDouble() + y)
+    override fun toString(): String {
+        return point.toString()
     }
 }
