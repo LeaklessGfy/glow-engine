@@ -1,6 +1,8 @@
+package asset
+
 import org.w3c.dom.CanvasRenderingContext2D
 
 interface Drawable {
     @JsName("draw")
-    fun draw(ctx: CanvasRenderingContext2D)
+    fun draw(ctx: CanvasRenderingContext2D, x: Double, y: Double)
 }

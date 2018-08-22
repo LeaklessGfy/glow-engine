@@ -1,3 +1,7 @@
+package organization
+
+import wrestler.*
+
 class Link(
         val user: dynamic,
         val wrestler: Wrestler,

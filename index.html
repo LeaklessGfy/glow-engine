@@ -2,19 +2,26 @@
 <head>
 </head>
 <body>
-    <canvas id="canvas" width="500" height="500"></canvas>
+    <canvas id="canvas" width="1000" height="1000"></canvas>
     <script type="text/javascript" src="out/production/Glow/lib/kotlin.js"></script>
     <script type="text/javascript" src="out/production/Glow/Glow.js"></script>
     <script>
         window.onload = function() {
-            var img = new Image();
-            img.src = "linux.png";
-
             var canvas = document.getElementById("canvas");
             var ctx = canvas.getContext("2d");
-            var map = new Glow.Map("linux.png");
-            var engine = new Glow.Engine(map);
-            engine.draw(ctx);
+
+            Glow.asset.HTMLAsset.Factory.init(["grass.png", "error.png"], function(assets) {
+                var map = Glow.map.Map.Factory.create(assets["grass.png"]);
+                var engine = new Glow.Engine(map);
+
+                canvas.width = map.width();
+                canvas.height = map.height();
+
+                ctx.fillStyle = "black";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                engine.draw(ctx, 0, 0);
+            });
         }
     </script>
 </body>

@@ -1,3 +1,5 @@
+package wrestler
+
 class Combat(
         var accuracy: Int,
         var damage: Int,

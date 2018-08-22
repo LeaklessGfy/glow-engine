@@ -1,3 +1,6 @@
+package wrestler
+
+import map.Point
 import kotlin.math.abs
 
 class Position(private val xOffset: Int, private val yOffset: Int, private val zOffset: Int) {

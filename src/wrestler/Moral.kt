@@ -1,3 +1,5 @@
+package wrestler
+
 class Moral(
         var ego: Int,
         var respect: Int,
