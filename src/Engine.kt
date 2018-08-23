@@ -1,28 +1,42 @@
-import asset.Drawable
 import map.Map
 import map.PointD
+import map.TileHolder
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.events.MouseEvent
+import wrestler.Wrestler
 
-class Engine(private val map: Map): Drawable {
-    @JsName("onHover")
-    fun onHover(e: MouseEvent, canvas: HTMLCanvasElement) {
-        val ctx = canvas.getContext("2d") as CanvasRenderingContext2D
-        val r = canvas.getBoundingClientRect()
-        val pos = PointD(e.clientX - r.left, e.clientY - r.top)
-        val offset = offset(ctx)
+class Engine(
+        private val canvas: HTMLCanvasElement,
+        private val map: Map,
+        private val active: Wrestler,
+        private val players: TileHolder
+) {
+    private val ctx: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D
+    private val offset: PointD = PointD((canvas.width / 2).toDouble(), ((canvas.height / 2) - (map.height() / 3)).toDouble())
 
-        map.onHover(pos, offset)
+    fun onHover(e: MouseEvent) {
+        val pos = realPos(e)
+        val tile = map.screenToIso(pos.x, pos.y)
+        map.applyOn { if(it != tile) it.onLeave() }
+        tile?.onHover()
+        draw()
     }
 
-    override fun draw(ctx: CanvasRenderingContext2D, x: Double, y: Double) {
-        val offset = offset(ctx)
+    fun onClick(e: MouseEvent) {
+        val pos = realPos(e)
+        map.screenToIso(pos.x, pos.y)?.let {
+            players.place(active, it)
+        }
+        draw()
+    }
+
+    fun draw() {
         map.draw(ctx, offset.x, offset.y)
     }
 
-    private fun offset(ctx: CanvasRenderingContext2D): PointD {
-        val canvas = ctx.canvas
-        return PointD((canvas.width / 2).toDouble(), ((canvas.height / 2) - (map.height() / 3)).toDouble())
+    private fun realPos(e: MouseEvent): PointD {
+        val r = canvas.getBoundingClientRect()
+        return PointD(e.clientX - r.left - offset.x, e.clientY - r.top - offset.y)
     }
 }

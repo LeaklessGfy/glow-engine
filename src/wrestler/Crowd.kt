@@ -1,3 +1,3 @@
 package wrestler
 
-class Crowd(var reaction: Int, var intensity: Int)
+data class Crowd(var reaction: Int, var intensity: Int)

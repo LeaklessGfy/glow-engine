@@ -1,3 +1,3 @@
 package wrestler
 
-class Bar(private var value: Int, private var maximum: Int)
+data class Bar(var value: Int, var maximum: Int)

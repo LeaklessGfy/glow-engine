@@ -1,12 +1,12 @@
 package wrestler
 
-class Combat(
-        var accuracy: Int,
-        var damage: Int,
-        var speed: Int,
-        var critical: Int,
-        var dodge: Int,
-        var agility: Int,
-        var recovery: Int,
-        var submission: Int
+data class Combat(
+        var accuracy: Int = 0,
+        var damage: Int = 0,
+        var speed: Int = 0,
+        var critical: Int = 0,
+        var dodge: Int = 0,
+        var agility: Int = 0,
+        var recovery: Int = 0,
+        var submission: Int = 0
 )

@@ -4,14 +4,15 @@ import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLImageElement
 import kotlin.browser.window
 
-class HTMLAsset(private val image: HTMLImageElement): Asset {
+class HTMLAsset(private val image: HTMLImageElement, private val obstacle: Boolean = true): Asset {
     private var loaded: Boolean = false
+    var xOffset = 0.0
+    var yOffset = 0.0
 
     companion object Factory {
-        @JsName("init")
-        fun init(paths: Array<String>, callback: (assets: dynamic) -> Nothing) {
+        fun init(paths: Array<String>, callback: (assets: Map<String, HTMLAsset>) -> Unit) {
             var counter = 0
-            val assets: dynamic = object{}
+            val assets = HashMap<String, HTMLAsset>()
 
             for (path in paths) {
                 val img = window.document.createElement("img") as HTMLImageElement
@@ -45,6 +46,16 @@ class HTMLAsset(private val image: HTMLImageElement): Asset {
     }
 
     override fun draw(ctx: CanvasRenderingContext2D, x: Double, y: Double) {
-        ctx.drawImage(image, x, y)
+        ctx.drawImage(image, x + xOffset, y + yOffset)
+    }
+
+    override fun offset(x: Double, y: Double): Asset {
+        xOffset = x
+        yOffset = y
+        return this
+    }
+
+    override fun obstacle(): Boolean {
+        return obstacle
     }
 }

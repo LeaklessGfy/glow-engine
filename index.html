@@ -1,5 +1,7 @@
+<!doctype html>
 <html>
-<head>
+<head lang="fr">
+    <meta charset="UTF-8">
     <style>
         canvas {
             padding-left: 0;
@@ -17,18 +19,8 @@
     <script>
         window.onload = function() {
             var canvas = document.getElementById("canvas");
-            var ctx = canvas.getContext("2d");
-
-            Glow.asset.HTMLAsset.Factory.init(["grass.png"], function(assets) {
-                var map = Glow.map.Map.Factory.create(assets["grass.png"]);
-                var engine = new Glow.Engine(map);
-
-                canvas.onmousemove = function(e) {
-                    engine.onHover(e, canvas);
-                };
-
-                engine.draw(ctx, 0, 0);
-            });
+            var client = new Glow.Client(canvas);
+            client.init();
         }
     </script>
 </body>
