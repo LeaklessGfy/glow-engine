@@ -20,7 +20,9 @@
         window.onload = function() {
             var canvas = document.getElementById("canvas");
             var client = new Glow.Client(canvas);
-            client.init();
+            client.init(function() {
+                console.log(client.active());
+            });
         }
     </script>
 </body>

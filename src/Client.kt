@@ -9,7 +9,8 @@ class Client(private val canvas: HTMLCanvasElement) {
     private var map: Map? = null
     private var engine: Engine? = null
 
-    fun init() {
+    @JsName("init")
+    fun init(callback: () -> Unit) {
         HTMLAsset.init(arrayOf("res/tiles/grass.png", "res/players/droid.png", "res/players/monster.png")) { assets ->
             map = Map.create(assets["res/tiles/grass.png"]!!).also { map ->
                 val active = Wrestler("Triple H", assets["res/players/droid.png"]!!)
@@ -31,7 +32,13 @@ class Client(private val canvas: HTMLCanvasElement) {
                     canvas.onclick = { e -> engine.onClick(e as MouseEvent) }
                     engine.draw()
                 }
+
+                callback()
             }
         }
+    }
+
+    fun active(): Wrestler? {
+        return engine?.active()
     }
 }

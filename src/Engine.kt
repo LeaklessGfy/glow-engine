@@ -40,6 +40,10 @@ class Engine(
         map.draw(ctx, offset.x, offset.y)
     }
 
+    fun active(): Wrestler {
+        return active
+    }
+
     private fun realPos(e: MouseEvent): PointD {
         val r = canvas.getBoundingClientRect()
         return PointD(e.clientX - r.left - offset.x, e.clientY - r.top - offset.y)
