@@ -4,7 +4,7 @@ import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLImageElement
 import kotlin.browser.window
 
-class HTMLAsset(private val image: HTMLImageElement, private val obstacle: Boolean = true): Asset {
+class HTMLAsset(private val image: HTMLImageElement, private val obstacle: Boolean = false): Asset {
     private var loaded: Boolean = false
     var xOffset = 0.0
     var yOffset = 0.0

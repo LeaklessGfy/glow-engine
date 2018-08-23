@@ -19,14 +19,19 @@ class Engine(
         val pos = realPos(e)
         val tile = map.screenToIso(pos.x, pos.y)
         map.applyOn { if(it != tile) it.onLeave() }
-        tile?.onHover()
+        tile?.run {
+            map.isFree(point.x, point.y, point.z)
+            onHover()
+        }
         draw()
     }
 
     fun onClick(e: MouseEvent) {
         val pos = realPos(e)
-        map.screenToIso(pos.x, pos.y)?.let {
-            players.place(active, it)
+        map.screenToIso(pos.x, pos.y)?.run {
+            if (map.isFree(point.x, point.y, point.z)) {
+                players.place(active, this)
+            }
         }
         draw()
     }

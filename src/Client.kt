@@ -10,14 +10,20 @@ class Client(private val canvas: HTMLCanvasElement) {
     private var engine: Engine? = null
 
     fun init() {
-        HTMLAsset.init(arrayOf("grass.png", "droid.png")) { assets ->
-            map = Map.create(assets["grass.png"]!!).also { map ->
-                val active = Wrestler("Triple H", assets["droid.png"]!!)
+        HTMLAsset.init(arrayOf("res/tiles/grass.png", "res/players/droid.png", "res/players/monster.png")) { assets ->
+            map = Map.create(assets["res/tiles/grass.png"]!!).also { map ->
+                val active = Wrestler("Triple H", assets["res/players/droid.png"]!!)
                 active.offset(10.0, -5.0)
+
+                val enemy = Wrestler("Randy Orton", assets["res/players/monster.png"]!!)
+                enemy.offset(0.0, 0.0)
 
                 val players = TileHolder()
                 map.tile(0, 0, 1)?.let {
                     players.place(active, it)
+                }
+                map.tile(0, 1, 1)?.let {
+                    players.place(enemy, it)
                 }
 
                 engine = Engine(canvas, map, active, players).also { engine ->

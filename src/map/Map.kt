@@ -12,6 +12,9 @@ class Map(private val tiles: Array<Array<Array<Tile>>>) : Asset {
     }
 
     fun tile(x: Int, y: Int, z: Int): Tile? {
+        if (!isValid(x, y, toRealZ(z))) {
+            return null
+        }
         return tiles[toRealZ(z)][x][y]
     }
 
@@ -55,6 +58,19 @@ class Map(private val tiles: Array<Array<Array<Tile>>>) : Asset {
 
     fun isValid(x: Int, y: Int, z: Int): Boolean {
         return z >= 0 && z < tiles.size && x >= 0 && x < tiles[z].size && y >= 0 && y < tiles[z].size
+    }
+
+    fun isFree(x: Int, y: Int, z: Int): Boolean {
+        if (!isValid(x, y, z)) {
+            return false
+        }
+        if (tiles[z][x][y].obstacle()) {
+            return false
+        }
+        if (z < tiles.size - 1 && tiles[z + 1].size > x && tiles[z + 1][x].size > y && !tiles[z + 1][x][y].isFree()) {
+            return false
+        }
+        return true
     }
 
     fun applyOn(applier: (t: Tile) -> Unit) {
