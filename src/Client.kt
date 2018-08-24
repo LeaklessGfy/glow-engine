@@ -37,8 +37,4 @@ class Client(private val canvas: HTMLCanvasElement) {
             }
         }
     }
-
-    fun active(): Wrestler? {
-        return engine?.active()
-    }
 }
